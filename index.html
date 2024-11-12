@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arweave Content Viewer</title>
+  <style>
+    /* Style for the iframe */
+    #arweaveContent {
+      width: 100%;
+      height: 100vh; /* Full screen display */
+      border: none; /* Remove border */
+    }
+  </style>
+</head>
+<body>
+
+<div id="content">
+  <p>Loading content...</p>
+</div>
+
+<script>
+  // Function to extract the hash from the URL
+  function getHashFromURL() {
+    const path = window.location.pathname;
+    return path.split("/")[1]; // Assumes the format is /arhash
+  }
+
+  // Dynamically load the iframe
+  function loadArweaveContent(hash) {
+    // Check if hash exists
+    if (hash) {
+      // Create the iframe element
+      const iframe = document.createElement("iframe");
+      iframe.id = "arweaveContent";
+      iframe.src = `https://arweave.4everland.xyz/${hash}`; // Construct the correct gateway URL
+      
+      // Clear content container and insert the iframe
+      const contentDiv = document.getElementById("content");
+      contentDiv.innerHTML = ""; // Clear loading message
+      contentDiv.appendChild(iframe);
+    } else {
+      document.getElementById("content").textContent = "No content hash provided in URL.";
+    }
+  }
+
+  // Get the hash and load the content
+  const arHash = getHashFromURL();
+  loadArweaveContent(arHash);
+</script>
+
+</body>
+</html>
